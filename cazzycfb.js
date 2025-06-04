@@ -7,6 +7,7 @@
  const crypto = require("crypto");
  const fakeua = require("fake-useragent")
  const fs = require("fs");
+ const colors = require('colors');
  const gradient = require("gradient-string")
 
 
@@ -231,7 +232,147 @@ function randstr(length) {
   }
   
   return randomString;
-}                               
+}
+
+function log(string) {
+    let d = new Date();
+    let hours = (d.getHours() < 10 ? '0' : '') + d.getHours();
+    let minutes = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+    let seconds = (d.getSeconds() < 10 ? '0' : '') + d.getSeconds();
+    console.log(`(${hours}:${minutes}:${seconds})`.white + ` - ${string}`);
+}
+
+async function captchaSolver(page, context, response) {
+    log(`(${'CLOUDFLARE-CKDDOSV5'.green}) Detected protection -> ` + `CloudFlare (JS)`.green);
+
+    for (let i = 0; i < 15; i++) {
+        (async () => {
+            await page.waitForTimeout(1000);
+            await page.mouse.move(randomIntFromInterval(10, 230), randomIntFromInterval(10, 230))
+        })
+    }
+
+    if (await page.title() === "Just a moment...") {
+        const hcaptcha_box = await page.locator('//*[@id="turnstile-wrapper"]/div');   // Looking for captcha button
+
+        if (hcaptcha_box) {
+            let x;
+            let y;
+            let captchaDetect = false;
+
+            try {
+                const rect = await hcaptcha_box.boundingBox();
+                x = rect.x + rect.width / 2;
+                y = rect.y + rect.height / 2;
+
+                log(`(${'CLOUDFLARE-CKDDOSV5'.green}) Managed challenge -> ` + `Detected captcha`.green);
+                log(`(${'CLOUDFLARE-CKDDOSV5'.green}) Detected element -> ` + `[ captcha box ]`.green);
+
+                captchaDetect = true;
+            } catch (e) {
+                log(`(${'CLOUDFLARE-CKDDOSV5'.green}) Managed challenge -> ` + `UAM`.green);
+                await page.waitForTimeout(15000);
+
+                if (await page.title() === "Just a moment...") {
+                    await page.waitForTimeout(15000);
+
+
+                    if (await page.title() === "Just a moment...") {
+                        await page.waitForTimeout(15000);
+                    }
+                }
+            }
+
+            if (captchaDetect) {
+                await page.mouse.click(x, y);
+
+                log(`(${'CLOUDFLARE-CKDDOSV5'.green}) Element clicked -> ` + `[ captcha box ]`.green);
+
+                await page.waitForTimeout(10000);
+
+                if (await page.title() === "Just a moment...") {
+                    await page.waitForTimeout(3000);
+                    await page.mouse.click(x, y);
+                    log(`(${'CLOUDFLARE-CKDDOSV5'.green}) Element clicked -> ` + `[ captcha box ]`.green);
+                    await page.waitForTimeout(10000);
+
+                    if (await page.title() === "Just a moment...") {
+                        await page.waitForTimeout(3000);
+                        await page.mouse.click(x, y);
+                        log(`(${'CLOUDFLARE-CKDDOSV5'.green}) Element clicked -> ` + `[ captcha box ]`.green);
+                        await page.waitForTimeout(10000);
+
+                        if (await page.title() === "Just a moment...") {
+                            await page.waitForTimeout(3000);
+                            await page.mouse.click(x, y);
+                            log(`(${'CLOUDFLARE-CKDDOSV5'.green}) Element clicked -> ` + `[ captcha box ]`.green);
+                            await page.waitForTimeout(10000);
+
+                            if (await page.title() === "Just a moment...") {
+                                await page.waitForTimeout(3000);
+                                await page.mouse.click(x, y);
+                                log(`(${'CLOUDFLARE-CKDDOSV5'.green}) Element clicked -> ` + `[ captcha box ]`.green);
+                                await page.waitForTimeout(10000);
+
+                                if (await page.title() === "Just a moment...") {
+                                    await page.waitForTimeout(3000);
+                                    await page.mouse.click(x, y);
+                                    log(`(${'CLOUDFLARE-CKDDOSV5'.green}) Element clicked -> ` + `[ captcha box ]`.green);
+                                    await page.waitForTimeout(10000);
+
+                                    if (await page.title() === "Just a moment...") {
+                                        await page.waitForTimeout(3000);
+                                        await page.mouse.click(x, y);
+                                        log(`(${'CLOUDFLARE-CKDDOSV5'.green}) Element clicked -> ` + `[ captcha box ]`.green);
+                                        await page.waitForTimeout(10000);
+
+                                        if (await page.title() === "Just a moment...") {
+                                            await page.waitForTimeout(3000);
+                                            await page.mouse.click(x, y);
+                                            log(`(${'CLOUDFLARE-CKDDOSV5'.green}) Element clicked -> ` + `[ captcha box ]`.green);
+                                            await page.waitForTimeout(10000);
+
+                                            if (await page.title() === "Just a moment...") {
+                                                await page.waitForTimeout(3000);
+                                                await page.mouse.click(x, y);
+                                                log(`(${'CLOUDFLARE-CKDDOSV5'.green}) Element clicked -> ` + `[ captcha box ]`.green);
+                                                await page.waitForTimeout(10000);
+
+                                                if (await page.title() === "Just a moment...") {
+                                                    await page.waitForTimeout(3000);
+                                                    await page.mouse.click(x, y);
+                                                    log(`(${'CLOUDFLARE-CKDDOSV5'.green}) Element clicked -> ` + `[ captcha box ]`.green);
+                                                    await page.waitForTimeout(10000);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        log(`(${'CLOUDFLARE-CKDDOSV5'.green}) Managed challenge -> ` + `UAM`.green);
+        await page.waitForTimeout(15000);
+    }
+
+    const title = await page.title();
+    const cookies = (await context.cookies()).map(c => `${c.name}=${c.value}`).join('; ');
+    const headers = await response.request().allHeaders();
+    const headerEntries = Object.entries(headers);
+
+    return [title, cookies, headerEntries];
+}
+
+function initialize() { }
+
+module.exports = {
+    initialize: initialize,
+    captchaSolver: captchaSolver
+};
 
   function randomHeaders() {
     const userAgents = [
@@ -3920,14 +4061,14 @@ const dest = [
  headers["Content-Security-Policy"] = randomHeaders['Content-Security-Policy'];
  headers["accept-encoding"] = randomHeaders['accept-encoding'];
  headers["accept-encoding"] = encoding;
- headers["Via"] = spoofed1;
- headers["sss"] = spoofed1;
+ headers["Via"] = spoofed2;
+ headers["sss"] = spoofed2;
  headers["Sec-Websocket-Key"] = spoofed1;
  headers["Sec-Websocket-Version"] = 13;
  headers.Upgrade = WebSocket();
  headers["Upgrade"] = WebSocket();
  headers["X-Forwarded-For"] = spoofed2;
- headers["X-Forwarded-Host"] = spoofed1;
+ headers["X-Forwarded-Host"] = spoofed2;
  headers["Client-IP"] = spoofed1;
  headers["Real-IP"] = spoofed2;
  headers["Referer"] = Ref;
@@ -3937,7 +4078,7 @@ const dest = [
  headers["User-Agent"] = Ref['User-Agent'];
  headers["user-agent"] = uap1;
  headers["User-Agent"] = uap1;
- headers["CF-Connecting-IP"] = spoofed1;
+ headers["CF-Connecting-IP"] = spoofed2;
  headers["CF-RAY"] = "randomRayValue";
  headers["cf-ray"] = "randomRayValue";
  headers["cf-ray"] = "948348ffe847e88a-HKG";
@@ -4125,9 +4266,9 @@ const dest = [
  headers["pragma"] = "no-cache, akamai-x-cache-on, akamai-x-cache-remote-on, akamai-x-check-cacheable, akamai-x-get-cache-key, akamai-x-get-extracted-values, akamai-x-get-ssl-client-session-id, akamai-x-get-true-cache-key, akamai-x-serial-no, akamai-x-get-request-id,akamai-x-get-nonces,akamai-x-get-client-ip,akamai-x-feo-trace";
  headers["Referer"] = Ref;
  pathts;
- headers["x-forwarded-for"] = spoofed;
- headers["x-real-ip"] = spoofed;
- headers["x-request-id"] = spoofed1;
+ headers["x-forwarded-for"] = spoofed2;
+ headers["x-real-ip"] = spoofed2;
+ headers["x-request-id"] = spoofed2;
  //headers["Trailer"] = "Max-Forwards";
  headers["sec-fetch-user"] = "?1";
  headers["cookie"] = "cf_clearance=" + randstr(4) + "." + randstr(20) + "." + randstr(40) + "-0.0.1 " + randstr(20) + ";_ga=" + randstr(20) + ";_gid=" + randstr(15);
